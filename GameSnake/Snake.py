@@ -3,6 +3,15 @@ from pygame.locals import *
 
 pygame.init()
 
+def colisao (c1,c2):
+    return (c1[0] == c2[0]) and (c1[1] == c2[1])
+
+
+def posicao_randown():
+    x = random.randint(0,600)
+    y = random.randint(0,600)
+    return (x//10*10,y//10*10)
+
 janela = pygame.display.set_mode((800,600))
 pygame.display.set_caption("Snake")
 
@@ -11,9 +20,9 @@ Snake = [(100, 100),(100, 100),(100, 100)]
 Snake_format = pygame.Surface((20,20))
 Snake_format.fill((0,0,128))
 
-food = pygame.Surface((10,10))
+food = pygame.Surface((20,20))
 food.fill((255,0,0))
-food_pos = (random.randint(0,600), random.randint(0,600))
+food_pos = posicao_randown()
 
 UP = 0
 RIGHT = 1
@@ -38,6 +47,14 @@ while True:
                     Minhadirecao = LEFT
                 if event.key == K_RIGHT:
                     Minhadirecao = RIGHT
+
+
+        if colisao(Snake[0],food_pos):
+           food_pos = posicao_randown()
+           Snake.append((0,0))
+
+
+
 
 
 
