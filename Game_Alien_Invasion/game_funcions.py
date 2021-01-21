@@ -2,7 +2,15 @@ import sys
 from bullet import Bullet
 import pygame
 
+def bullets_update(bullets):
+    for bullet in bullets.copy():
+        if bullet.rect.bottom <= 0:
+            bullets.remove(bullet)
 
+def fire_bullet(ai_config,tela,nave,bullets):
+    if len(bullets) <= ai_config.bullets_permitidas:
+        new_bullet = Bullet(ai_config, tela, nave)
+        bullets.add(new_bullet)
 def chek_event_Keydown(event, ai_config,tela ,nave ,bullets):
       
       if event.key == pygame.K_RIGHT:
@@ -10,8 +18,7 @@ def chek_event_Keydown(event, ai_config,tela ,nave ,bullets):
       if event.key == pygame.K_LEFT:
             nave.moving_left = True
       elif event.key == pygame.K_SPACE:
-           new_bullet = Bullet(ai_config,tela,nave)
-           bullets.add(new_bullet)      
+       fire_bullet(ai_config,tela,nave,bullets)
 def check_event_KeyUp(event,nave):
      if event.key == pygame.K_RIGHT:
             nave.moving_right = False 
