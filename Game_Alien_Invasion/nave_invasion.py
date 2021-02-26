@@ -7,7 +7,7 @@ class Nave():
 
           self.tela = tela
           self.ai_config = ai_config
-          self.image = pygame.image.load('C:/PythonFiles/image/nave.bmp')
+          self.image = pygame.image.load('C:/JogosPython/GamePython/Game_Alien_Invasion/image/nave.png')
           self.rect = self.image.get_rect()
 
           self.tela_rect = tela.get_rect()
