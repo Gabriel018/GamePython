@@ -2,6 +2,33 @@ import sys
 from bullet import Bullet
 import pygame
 from alien import Alien
+from time import sleep
+
+
+
+def chek_alien_botton(ai_config,stats,tela,nave,aliens,bullets):
+    #verifica se algum alien colidiu  com a borda
+    tela_rect  = tela.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= tela_rect.bottom:
+           nave_hit(ai_config,stats,tela,nave,aliens,bullets)
+           print("Voce perdeu")
+           exit()
+
+def nave_hit(ai_config,stats,tela,nave,aliens,bullets):
+    #Responde ao fato da espaçonave ter sido atingida por um alien
+  if stats.nave_left > 0 :
+
+     stats.nave_left -= 1
+    #Esvazia a lista de Aliens
+     aliens.empty()
+     bullets.empty()
+    #Cria uma frota e centraliza
+     create_aliens(ai_config,tela,nave,aliens)
+     nave.center_nave()
+     sleep(3)
+  else:
+    stats.game_active = False
 
 def check_frota_borderd(ai_config,aliens):
     #responde propriamente se algum alien alcançou a borda
@@ -16,10 +43,15 @@ def change_frota_direction(ai_config,aliens):
         ai_config.frota_direction = -1
 
 
-def update_aliens(ai_config,aliens):
+def update_aliens(ai_config,stats,tela,nave,aliens,bullets):
     #verifica a posiçao dos aliens entao atualiza a frota de aliens
     check_frota_borderd(ai_config,aliens)
     aliens.update()
+    #verifica se houve colisao entre a nave e o alien
+    if pygame.sprite.spritecollideany(nave,aliens):
+       nave_hit(ai_config,stats,tela,nave,aliens,bullets)
+       print("Oh Shit")
+    chek_alien_botton(ai_config,stats,tela,nave,aliens,bullets)
 def get_number_aliens(ai_config,alien_width):
     avaliacao_space_x = ai_config.tela_width - 2 * alien_width
     number_aliens_x = int(avaliacao_space_x / (2 * alien_width))
@@ -48,18 +80,22 @@ def create_aliens(ai_config,tela,nave,aliens,):
      for alien_number in range(number_aliens):
         create_alien(ai_config,tela,aliens,alien_number,row_number)
 
-def bullets_update(bullets):
+def bullets_update(ai_config,tela,nave,aliens,bullets):
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+    check_bullet_alien(ai_config,tela,nave,aliens,bullets)
+def check_bullet_alien(ai_config,tela,nave,aliens,bullets):
+    # Verifica se os objetos colidiram
+    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    if len(aliens) ==  0:
+        bullets.empty()
+        create_aliens(ai_config,tela,nave,aliens)
 
 def fire_bullet(ai_config,tela,nave,bullets):
     if len(bullets) <= ai_config.bullets_permitidas:
         new_bullet = Bullet(ai_config, tela, nave)
         bullets.add(new_bullet)
-
-    #Cria uma linha de aliens
-
 
 def chek_event_Keydown(event, ai_config,tela ,nave ,bullets):
       if event.key == pygame.K_RIGHT:

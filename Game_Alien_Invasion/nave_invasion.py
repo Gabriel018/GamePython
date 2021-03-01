@@ -32,4 +32,5 @@ class Nave():
       def blitme(self):
         self.tela.blit(self.image,self.rect)
 
-    
+      def center_nave(self):
+          self.center = self.tela_rect.centerx

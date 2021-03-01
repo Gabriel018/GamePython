@@ -20,13 +20,14 @@ class Alien(Sprite):
         tela_rect = self.tela.get_rect()
         if self.rect.right >= tela_rect.right:
             return True
-        if self.rect.left <= 0:
+        if self.rect.left <= tela_rect.left:
             return True
 
     def update(self):
         #atualiza a direçao do alien
-        self.x += (self.ai_config.alien_speed * self.ai_config.frota_direction)
+        self.x -= (self.ai_config.alien_speed * self.ai_config.frota_direction)
         self.rect.x = self.x
+
 
     def blitme(self):
         #Desenha o aliem em sua posiçao inicial

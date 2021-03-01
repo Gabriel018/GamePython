@@ -17,6 +17,7 @@ class Config():
         self.frota_direction = 1
 
         self.nave_velocidade = 1.0
+        self.nave_limit = 3
         self.tela_width = 1200
         self.tela_heigth = 600
         self.bg_color = ( 0,0, 25)
