@@ -124,13 +124,14 @@ def check_eventos(ai_config, tela, nave, bullets):
        elif event.type == pygame.KEYUP:
              check_event_KeyUp(event,nave)
 
-def update_tela(ai_config, tela, nave,aliens,bullets):
-
+def update_tela(ai_config,tela,stats, nave,aliens,bullets,play_button):
     tela.fill(ai_config.bg_color)
     nave.blitme()
     for bullet in bullets.sprites():
         bullet.b_draw_bullet()
-    aliens.draw(tela)
-    #deixa a tela mais recente visivel
+        aliens.draw(tela)
+    if not stats.game_active:
+       play_button.draw_button()
+     #deixa a tela mais recente visivel
     pygame.display.flip()   
                

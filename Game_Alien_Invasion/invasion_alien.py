@@ -1,5 +1,6 @@
 import sys
 import pygame
+from button import Button
 from config_invasion import Config
 from Game_Estatistic import game_stats
 from nave_invasion import Nave
@@ -20,6 +21,7 @@ def run_game():
      gf.create_aliens(ai_config,tela,nave,aliens)
      stats  =  game_stats(ai_config)
      pygame.display.set_caption("Invasao_alien")
+     play_button = Button(ai_config,tela,"Jogar")
       #inicia o laço de repetiçao do jogo
      while True:
 
@@ -28,7 +30,7 @@ def run_game():
       bullets.update()
       gf.bullets_update(ai_config,tela,nave,aliens,bullets)
       gf.update_aliens(ai_config,stats,tela,nave,aliens,bullets)
-      gf.update_tela(ai_config, tela, nave, aliens , bullets)
+      gf.update_tela(ai_config, tela,stats, nave, aliens , bullets,play_button)
 
 run_game()        
 

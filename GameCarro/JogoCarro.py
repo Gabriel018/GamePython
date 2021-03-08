@@ -1,6 +1,8 @@
 import pygame
 
-pygame.init()
+class jogo_car():
+
+ pygame.init()
 
 x = 400
 y = 300
@@ -10,10 +12,10 @@ pos_y = -100
 velocidade = 10
 velocidade2 = 20
 
-fundo =  pygame.image.load("GameCarro/fundo.png")
-carroPreto = pygame.image.load("GameCarro/CarroPreto.png")
-carroRoxo = pygame.image.load("GameCarro/CarroRoxo01.png")
-carroRed = pygame.image.load("GameCarro/CarroRed.png")
+fundo =  pygame.image.load("c:/JogosPython/GamePython/GameCarro/fundo.png")
+carroPreto = pygame.image.load("c:/JogosPython/GamePython/GameCarro/CarroPreto.png")
+carroRoxo = pygame.image.load("c:/JogosPython/GamePython/GameCarro/CarroRoxo01.png")
+carroRed = pygame.image.load("c:/JogosPython/GamePython/GameCarro/CarroRed.png")
 
 #Cria janela
 janela = pygame.display.set_mode((800,500))
@@ -23,7 +25,7 @@ janela_aberta = True
 
 #Desenha Objeto
 
-
+colission = pygame.sprite.spritecollide(carroPreto,carroRed,True,True)
 while janela_aberta:
     pygame.time.delay(50)
     for evento in pygame.event.get():
