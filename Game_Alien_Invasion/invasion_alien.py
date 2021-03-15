@@ -25,12 +25,14 @@ def run_game():
       #inicia o laço de repetiçao do jogo
      while True:
 
-      gf.check_eventos(ai_config, tela, nave,bullets)
-      nave.update()
-      bullets.update()
-      gf.bullets_update(ai_config,tela,nave,aliens,bullets)
-      gf.update_aliens(ai_config,stats,tela,nave,aliens,bullets)
-      gf.update_tela(ai_config, tela,stats, nave, aliens , bullets,play_button)
+        gf.check_eventos(ai_config,tela, stats, play_button, nave, aliens,
+                 bullets)
+        if stats.game_active:
+          nave.update()
+          bullets.update()
+          gf.bullets_update(ai_config,tela,nave,aliens,bullets)
+          gf.update_aliens(ai_config,stats,tela,nave,aliens,bullets)
+        gf.update_tela(ai_config, tela,stats, nave, aliens , bullets,play_button)
 
 run_game()        
 

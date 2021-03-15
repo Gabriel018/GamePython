@@ -4,7 +4,7 @@ import pygame
 class Nave():
     # inicia inicia a aeronave e poem e sua posiçao
       def __init__(self,ai_config,tela):
-
+          super(Nave,self).__init__()
           self.tela = tela
           self.ai_config = ai_config
           self.image = pygame.image.load('C:/JogosPython/GamePython/Game_Alien_Invasion/image/nave.png')

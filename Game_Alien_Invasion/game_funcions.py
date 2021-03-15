@@ -17,18 +17,18 @@ def chek_alien_botton(ai_config,stats,tela,nave,aliens,bullets):
 
 def nave_hit(ai_config,stats,tela,nave,aliens,bullets):
     #Responde ao fato da espaçonave ter sido atingida por um alien
-  if stats.nave_left > 0 :
-
-     stats.nave_left -= 1
+    if stats.ships_left > 0:
+       stats.nave_left -= 1
     #Esvazia a lista de Aliens
-     aliens.empty()
-     bullets.empty()
+       aliens.empty()
+       bullets.empty()
     #Cria uma frota e centraliza
-     create_aliens(ai_config,tela,nave,aliens)
-     nave.center_nave()
-     sleep(3)
-  else:
-    stats.game_active = False
+       create_aliens(ai_config,tela,nave,aliens)
+       nave.center_nave()
+       sleep(3)
+    else:
+       stats.game_active = False
+
 
 def check_frota_borderd(ai_config,aliens):
     #responde propriamente se algum alien alcançou a borda
@@ -110,26 +110,41 @@ def check_event_KeyUp(event,nave):
      if event.key == pygame.K_RIGHT:
             nave.moving_right = False 
      if event.key == pygame.K_LEFT:
-            nave.moving_left = False                     
+            nave.moving_left = False
 
-def check_eventos(ai_config, tela, nave, bullets):
+
+def check_eventos(ai_config, tela, stats,  play_button, nave, aliens,
+                 bullets):
      #redesenha o laço a cada passagem
     for event in pygame.event.get():
        if event.type == pygame.QUIT:
-              sys.exit     
-                  
+              sys.exit
         #responde aos eventos precionados as teclas do mouse
        elif event.type == pygame.KEYDOWN:   
-             chek_event_Keydown(event, ai_config, tela, nave ,bullets)  
+             chek_event_Keydown(event, ai_config, tela, nave ,bullets)
        elif event.type == pygame.KEYUP:
              check_event_KeyUp(event,nave)
+       elif event.type == pygame.MOUSEBUTTONDOWN:
+           mouse_x,mouse_y = pygame.mouse.get_pos()
+           check_play_buttons(ai_config, tela, stats, play_button, nave, aliens,
+                      bullets, mouse_x, mouse_y)
+
+def check_play_buttons(ai_config,tela, stats, play_button, nave, aliens,
+                      bullets, mouse_x, mouse_y):
+    #inicia um novo jogo quando o botao e clicado
+     btn_cliked =  play_button.rect.collidepoint(mouse_x,mouse_y)
+     if btn_cliked and not stats.game_active:
+           stats.game_active = True
+           print("foi clicado")
 
 def update_tela(ai_config,tela,stats, nave,aliens,bullets,play_button):
     tela.fill(ai_config.bg_color)
-    nave.blitme()
+
     for bullet in bullets.sprites():
         bullet.b_draw_bullet()
-        aliens.draw(tela)
+    nave.blitme()
+    aliens.draw(tela)
+
     if not stats.game_active:
        play_button.draw_button()
      #deixa a tela mais recente visivel

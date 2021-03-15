@@ -4,6 +4,6 @@ class game_stats():
         self.reset_stats()
         self.game_active = False
     def reset_stats(self):
- #Iniccializa os  dados estasstiticos
+        #Iniccializa os  dados estasstiticos
        self.nave_left = self.ai_config.nave_limit
 

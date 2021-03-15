@@ -8,14 +8,14 @@ class Button():
         self.tela_rect = tela.get_rect()
 
         #Define as dimençoes do Botao
-        self.width, self.heigth = 180,50
+        self.width, self.height = 200,50
         self.button_color = (255,255,0)
         self.text_color = (0,0,0)
-        self.font = pygame.font.SysFont(None,48)
+        self.font = pygame.font.SysFont(None,38)
 
         #Constroi o objeto Rect
 
-        self.rect  = pygame.Rect(0 , 0 , self.width,self.heigth)
+        self.rect = pygame.Rect(0,0 , self.width,self.height)
         self.rect.center = self.tela_rect.center
         self.prep_msg(msg)
 
