@@ -12,12 +12,11 @@ def chek_alien_botton(ai_config,stats,tela,nave,aliens,bullets):
     for alien in aliens.sprites():
         if alien.rect.bottom >= tela_rect.bottom:
            nave_hit(ai_config,stats,tela,nave,aliens,bullets)
-           print("Voce perdeu")
-           exit()
+
 
 def nave_hit(ai_config,stats,tela,nave,aliens,bullets):
     #Responde ao fato da espaçonave ter sido atingida por um alien
-    if stats.ships_left > 0:
+    if stats.nave_left > 0:
        stats.nave_left -= 1
     #Esvazia a lista de Aliens
        aliens.empty()
@@ -28,6 +27,7 @@ def nave_hit(ai_config,stats,tela,nave,aliens,bullets):
        sleep(3)
     else:
        stats.game_active = False
+       pygame.mouse.set_visible(True)
 
 
 def check_frota_borderd(ai_config,aliens):
@@ -90,6 +90,7 @@ def check_bullet_alien(ai_config,tela,nave,aliens,bullets):
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
     if len(aliens) ==  0:
         bullets.empty()
+        ai_config.add_speed()
         create_aliens(ai_config,tela,nave,aliens)
 
 def fire_bullet(ai_config,tela,nave,bullets):
@@ -134,17 +135,21 @@ def check_play_buttons(ai_config,tela, stats, play_button, nave, aliens,
     #inicia um novo jogo quando o botao e clicado
      btn_cliked =  play_button.rect.collidepoint(mouse_x,mouse_y)
      if btn_cliked and not stats.game_active:
+           #Reinicializa as configuraçoes do jogo
+           ai_config.inicializa_config()
+           # Oculta o visor do Mouse
+           pygame.mouse.set_visible(False)
            stats.game_active = True
            print("foi clicado")
 
-def update_tela(ai_config,tela,stats, nave,aliens,bullets,play_button):
+def update_tela(ai_config,tela,stats,sc,nave,aliens,bullets,play_button):
     tela.fill(ai_config.bg_color)
-
+    #desenha a pontuaçao do  jogo
     for bullet in bullets.sprites():
         bullet.b_draw_bullet()
     nave.blitme()
     aliens.draw(tela)
-
+    sc.show_score()
     if not stats.game_active:
        play_button.draw_button()
      #deixa a tela mais recente visivel
