@@ -28,6 +28,8 @@ class Config():
 
         self.inicializa_config()
 
+        self.alien_point  = 10
+
     def inicializa_config(self):
         # inicia as config que mudam no decorrer do jogo
         self.nave_velocidade = 1.0

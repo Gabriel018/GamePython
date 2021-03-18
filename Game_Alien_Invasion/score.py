@@ -19,7 +19,7 @@ class ScoreBoard():
         score_str = str(self.stats.score)
         self.score_image = self.font.render(score_str,True,self.text_color,self.ai_config.bg_color)
         self.score_rect = self.score_image.get_rect()
-        self.score_rect.right = self.score_rect.right + 10
+        self.score_rect.left = self.tela_rect.left = 10
         self.score_rect.top = 20
 
     def show_score(self):

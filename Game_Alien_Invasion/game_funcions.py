@@ -80,14 +80,18 @@ def create_aliens(ai_config,tela,nave,aliens,):
      for alien_number in range(number_aliens):
         create_alien(ai_config,tela,aliens,alien_number,row_number)
 
-def bullets_update(ai_config,tela,nave,aliens,bullets):
+def bullets_update(ai_config,tela,sc,stats,nave,aliens,bullets):
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
-    check_bullet_alien(ai_config,tela,nave,aliens,bullets)
-def check_bullet_alien(ai_config,tela,nave,aliens,bullets):
+    check_bullet_alien(ai_config,tela,sc,stats,nave,aliens,bullets)
+def check_bullet_alien(ai_config,tela,sc,stats,nave,aliens,bullets):
     # Verifica se os objetos colidiram
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    if collisions:
+        stats.score += ai_config.alien_point
+        sc.prep_score()
+
     if len(aliens) ==  0:
         bullets.empty()
         ai_config.add_speed()

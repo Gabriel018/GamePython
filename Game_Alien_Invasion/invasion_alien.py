@@ -33,7 +33,7 @@ def run_game():
         if stats.game_active:
           nave.update()
           bullets.update()
-          gf.bullets_update(ai_config,tela,nave,aliens,bullets)
+          gf.bullets_update(ai_config,tela,sc,stats,nave,aliens,bullets)
           gf.update_aliens(ai_config,stats,tela,nave,aliens,bullets)
         gf.update_tela(ai_config, tela,stats,sc, nave, aliens, bullets,play_button,)
 
