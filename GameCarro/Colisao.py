@@ -55,7 +55,7 @@ veloc_x, veloc_y = 4, 4
 
 
 Objeto2 = pygame.Rect(750,100,40,120)
-veloc_z = 2
+veloc_z = 10
 
 
 Objeto3 = pygame.Rect(20,300,40,120)
@@ -63,8 +63,11 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-
-
+        mov_tecla = pygame.key.get_pressed()
+        if mov_tecla[pygame.K_UP]:
+            Objeto3.y -= veloc_z
+        if mov_tecla[pygame.K_DOWN]:
+            Objeto3.y += veloc_z
 
     tela.fill(bg_color)
     objetos()
