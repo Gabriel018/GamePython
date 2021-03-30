@@ -1,4 +1,4 @@
-import pygame
+import pygame,sys
 
 class jogo_car():
 
@@ -7,7 +7,7 @@ class jogo_car():
 x = 400
 y = 300
 pos_x = 300
-pos_y = -100
+pos_y = -200
 
 velocidade = 10
 velocidade2 = 20
@@ -19,8 +19,10 @@ carroRoxo = pygame.image.load("c:/JogosPython/GamePython/GameCarro/CarroRoxo01.p
 
 
 #Cria janela
+
 janela = pygame.display.set_mode((800,500))
 pygame.display.set_caption("Jogo do carro")
+tempo = pygame.time.Clock()
 janela_aberta = True
 
 
@@ -33,16 +35,24 @@ def Carros():
 
     carroRed = pygame.image.load("c:/JogosPython/GamePython/GameCarro/CarroRed.png")
     CarroRect2 = carroRed.get_rect()
-    CarroRect2.y += pos_y
+    CarroRect2.y += pos_y + 100
+    CarroRect2.x = pos_x
 
     carroRoxo = pygame.image.load("c:/JogosPython/GamePython/GameCarro/CarroRoxo01.png")
+    CarroRect3 = carroRoxo.get_rect()
+    CarroRect3.x += pos_x + 120
+    CarroRect3.y = pos_y - 400
 
 
     if CarroRect.colliderect(CarroRect2):
-        print("colidiu")
+        exit()
+
+    if CarroRect.colliderect(CarroRect3):
+        exit()
 
     janela.blit(carroPrincipal,CarroRect)
     janela.blit(carroRed,CarroRect2)
+    janela.blit(carroRoxo,CarroRect3)
 
 #Desenha Objeto
 
@@ -66,14 +76,14 @@ while janela_aberta:
     if (pos_y >= 900):
         pos_y = -300
 
-    pos_y += velocidade2
+    pos_y += velocidade
 
 
     janela.blit(fundo,(0,0))
-    janela.blit(carroRoxo,(pos_x +110,pos_y -400))
+    #janela.blit(carroRoxo,(pos_x +110,pos_y -400))
     Carros()
     pygame.display.update()
-
+    tempo.tick(80)
 
 
 pygame.quit()
