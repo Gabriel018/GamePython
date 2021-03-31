@@ -1,4 +1,6 @@
 import pygame,sys
+from pygame.transform import scale
+from pygame.image import load
 
 class jogo_car():
 
@@ -13,13 +15,15 @@ pos_y = -200
 velocidade = 10
 velocidade2 = 20
 
-fundo =  pygame.image.load("c:/JogosPython/GamePython/GameCarro/fundo.png")
+
 
 #Cria janela
 
-janela = pygame.display.set_mode((800,500))
+janela = pygame.display.set_mode((800,600))
+fundo = pygame.image.load("c:/JogosPython/GamePython/GameCarro/estrada.png")
+fundo = pygame.transform.scale(fundo,(800,600))  #Redirecionamneto da imagem
 pygame.display.set_caption("Jogo do carro")
-tempo = pygame.time.Clock()
+
 janela_aberta = True
 
 
@@ -81,17 +85,12 @@ while janela_aberta:
         if evento.type == pygame.QUIT:
             janela_aberta = False
 
-
-
-
-
-
     janela.blit(fundo,(0,0))
     Carros()
     controles()
     movinta_carro()
     pygame.display.update()
-    tempo.tick(80)
+
 
 
 pygame.quit()
