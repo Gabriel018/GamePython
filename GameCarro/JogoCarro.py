@@ -2,6 +2,7 @@ import pygame,sys
 
 class jogo_car():
 
+
  pygame.init()
 
 x = 400
@@ -13,10 +14,6 @@ velocidade = 10
 velocidade2 = 20
 
 fundo =  pygame.image.load("c:/JogosPython/GamePython/GameCarro/fundo.png")
-
-carroRoxo = pygame.image.load("c:/JogosPython/GamePython/GameCarro/CarroRoxo01.png")
-
-
 
 #Cria janela
 
@@ -43,18 +40,40 @@ def Carros():
     CarroRect3.x += pos_x + 120
     CarroRect3.y = pos_y - 400
 
-
+    #colisoes
     if CarroRect.colliderect(CarroRect2):
         exit()
 
     if CarroRect.colliderect(CarroRect3):
         exit()
 
+
+
+    #motra na tela
     janela.blit(carroPrincipal,CarroRect)
     janela.blit(carroRed,CarroRect2)
     janela.blit(carroRoxo,CarroRect3)
 
-#Desenha Objeto
+
+
+def controles():
+    global x, y
+    comando = pygame.key.get_pressed()
+    if comando[pygame.K_UP]:
+        y -= velocidade
+    if comando[pygame.K_DOWN]:
+        y += velocidade
+    if comando[pygame.K_LEFT]:
+        x -= velocidade
+    if comando[pygame.K_RIGHT]:
+        x += velocidade
+
+def movinta_carro():
+    global pos_y,velocidade
+    if (pos_y >= 900):
+        pos_y = -300
+    pos_y += velocidade
+
 
 while janela_aberta:
     pygame.time.delay(50)
@@ -63,25 +82,14 @@ while janela_aberta:
             janela_aberta = False
 
 
-    comando = pygame.key.get_pressed()
-    if comando[pygame.K_UP]:
-       y -= velocidade
-    if comando[pygame.K_DOWN]:
-       y += velocidade
-    if comando[pygame.K_LEFT]:
-       x -= velocidade
-    if comando[pygame.K_RIGHT]:
-       x += velocidade
 
-    if (pos_y >= 900):
-        pos_y = -300
 
-    pos_y += velocidade
 
 
     janela.blit(fundo,(0,0))
-    #janela.blit(carroRoxo,(pos_x +110,pos_y -400))
     Carros()
+    controles()
+    movinta_carro()
     pygame.display.update()
     tempo.tick(80)
 
