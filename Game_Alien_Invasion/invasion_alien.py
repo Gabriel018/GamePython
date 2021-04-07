@@ -19,6 +19,7 @@ def run_game():
      #Cria a espaço nave
      nave = Nave(ai_config, tela)
      stats = game_stats(ai_config)
+     #cria o painel de pontos
      sc = ScoreBoard(ai_config,tela,stats)
      #cria a frota de aliens
      gf.create_aliens(ai_config,tela,nave,aliens)
@@ -28,8 +29,7 @@ def run_game():
       #inicia o laço de repetiçao do jogo
      while True:
 
-        gf.check_eventos(ai_config,tela, stats, play_button, nave, aliens,
-                 bullets)
+        gf.check_eventos(ai_config,tela,stats,sc,nave,aliens,bullets,play_button)
         if stats.game_active:
           nave.update()
           bullets.update()

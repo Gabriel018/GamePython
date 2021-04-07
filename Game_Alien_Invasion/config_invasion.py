@@ -17,7 +17,9 @@ class Config():
         self.bullets_permitidas = 3
 
         #taxa de velocidade do jogo
-        self.speed_scala= 1.2
+        self.speed_scala = 1.2
+
+        self.score_scala = 1.5
 
 
         self.frota_vel_drop = 10
@@ -43,3 +45,5 @@ class Config():
         self.bullet_velocidade *= self.speed_scala
         self.alien_speed  *= self.speed_scala
         self.frota_direction *=self.speed_scala
+        self.alien_point  = int(self.alien_point*self.score_scala)
+        print(self.alien_point)

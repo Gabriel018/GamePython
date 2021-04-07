@@ -5,6 +5,12 @@ from alien import Alien
 from time import sleep
 
 
+def check_high_score(stats,sc):
+    #verifica se ha uma nov apontuaçao
+    if stats.score > stats.high_score:
+       stats.high_score = stats.score
+       sc.prep_high_score()
+
 
 def chek_alien_botton(ai_config,stats,tela,nave,aliens,bullets):
     #verifica se algum alien colidiu  com a borda
@@ -24,7 +30,7 @@ def nave_hit(ai_config,stats,tela,nave,aliens,bullets):
     #Cria uma frota e centraliza
        create_aliens(ai_config,tela,nave,aliens)
        nave.center_nave()
-       sleep(3)
+       sleep(1)
     else:
        stats.game_active = False
        pygame.mouse.set_visible(True)
@@ -91,7 +97,7 @@ def check_bullet_alien(ai_config,tela,sc,stats,nave,aliens,bullets):
     if collisions:
         stats.score += ai_config.alien_point
         sc.prep_score()
-
+        check_high_score(stats,sc)
     if len(aliens) ==  0:
         bullets.empty()
         ai_config.add_speed()
@@ -118,8 +124,7 @@ def check_event_KeyUp(event,nave):
             nave.moving_left = False
 
 
-def check_eventos(ai_config, tela, stats,  play_button, nave, aliens,
-                 bullets):
+def check_eventos(ai_config,tela,stats,sc,nave,aliens,bullets,play_button):
      #redesenha o laço a cada passagem
     for event in pygame.event.get():
        if event.type == pygame.QUIT:
@@ -140,10 +145,11 @@ def check_play_buttons(ai_config,tela, stats, play_button, nave, aliens,
      btn_cliked =  play_button.rect.collidepoint(mouse_x,mouse_y)
      if btn_cliked and not stats.game_active:
            #Reinicializa as configuraçoes do jogo
+           stats.game_active = True
+           stats.reset_stats()
            ai_config.inicializa_config()
            # Oculta o visor do Mouse
            pygame.mouse.set_visible(False)
-           stats.game_active = True
            print("foi clicado")
 
 def update_tela(ai_config,tela,stats,sc,nave,aliens,bullets,play_button):
