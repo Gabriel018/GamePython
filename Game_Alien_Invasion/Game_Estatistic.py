@@ -7,5 +7,6 @@ class game_stats():
     def reset_stats(self):
         #Iniccializa os  dados estatisticos
        self.score = 0
+       self.level = 0
        self.nave_left = self.ai_config.nave_limit
 

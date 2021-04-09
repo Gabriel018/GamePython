@@ -1,7 +1,8 @@
 
 import pygame
+from pygame.sprite import  Sprite
 
-class Nave():
+class Nave(Sprite):
     # inicia inicia a aeronave e poem e sua posiçao
       def __init__(self,ai_config,tela):
           super(Nave,self).__init__()

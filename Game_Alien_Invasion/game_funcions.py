@@ -12,18 +12,19 @@ def check_high_score(stats,sc):
        sc.prep_high_score()
 
 
-def chek_alien_botton(ai_config,stats,tela,nave,aliens,bullets):
+def chek_alien_botton(ai_config,stats,sc,tela,nave,aliens,bullets):
     #verifica se algum alien colidiu  com a borda
     tela_rect  = tela.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= tela_rect.bottom:
-           nave_hit(ai_config,stats,tela,nave,aliens,bullets)
+           nave_hit(ai_config,stats,sc,tela,nave,aliens,bullets)
 
 
-def nave_hit(ai_config,stats,tela,nave,aliens,bullets):
+def nave_hit(ai_config,stats,sc,tela,nave,aliens,bullets):
     #Responde ao fato da espaçonave ter sido atingida por um alien
     if stats.nave_left > 0:
        stats.nave_left -= 1
+       sc.prep_nave()
     #Esvazia a lista de Aliens
        aliens.empty()
        bullets.empty()
@@ -49,15 +50,15 @@ def change_frota_direction(ai_config,aliens):
         ai_config.frota_direction = -1
 
 
-def update_aliens(ai_config,stats,tela,nave,aliens,bullets):
+def update_aliens(ai_config,stats,sc,tela,nave,aliens,bullets):
     #verifica a posiçao dos aliens entao atualiza a frota de aliens
     check_frota_borderd(ai_config,aliens)
     aliens.update()
     #verifica se houve colisao entre a nave e o alien
     if pygame.sprite.spritecollideany(nave,aliens):
-       nave_hit(ai_config,stats,tela,nave,aliens,bullets)
+       nave_hit(ai_config,stats,sc,tela,nave,aliens,bullets)
        print("Oh Shit")
-    chek_alien_botton(ai_config,stats,tela,nave,aliens,bullets)
+    chek_alien_botton(ai_config,stats,sc,tela,nave,aliens,bullets)
 def get_number_aliens(ai_config,alien_width):
     avaliacao_space_x = ai_config.tela_width - 2 * alien_width
     number_aliens_x = int(avaliacao_space_x / (2 * alien_width))
@@ -99,6 +100,9 @@ def check_bullet_alien(ai_config,tela,sc,stats,nave,aliens,bullets):
         sc.prep_score()
         check_high_score(stats,sc)
     if len(aliens) ==  0:
+        # Se a frota for destruida
+        stats.level +=1
+        sc.prep_level()
         bullets.empty()
         ai_config.add_speed()
         create_aliens(ai_config,tela,nave,aliens)
@@ -136,10 +140,10 @@ def check_eventos(ai_config,tela,stats,sc,nave,aliens,bullets,play_button):
              check_event_KeyUp(event,nave)
        elif event.type == pygame.MOUSEBUTTONDOWN:
            mouse_x,mouse_y = pygame.mouse.get_pos()
-           check_play_buttons(ai_config, tela, stats, play_button, nave, aliens,
+           check_play_buttons(ai_config, tela, stats,sc, play_button, nave, aliens,
                       bullets, mouse_x, mouse_y)
 
-def check_play_buttons(ai_config,tela, stats, play_button, nave, aliens,
+def check_play_buttons(ai_config,tela, stats,sc, play_button, nave, aliens,
                       bullets, mouse_x, mouse_y):
     #inicia um novo jogo quando o botao e clicado
      btn_cliked =  play_button.rect.collidepoint(mouse_x,mouse_y)
@@ -147,6 +151,11 @@ def check_play_buttons(ai_config,tela, stats, play_button, nave, aliens,
            #Reinicializa as configuraçoes do jogo
            stats.game_active = True
            stats.reset_stats()
+           #Reinicia as imagens do painel
+           sc.prep_score()
+           sc.prep_high_score()
+           sc.prep_level( )
+           sc.prep_nave()
            ai_config.inicializa_config()
            # Oculta o visor do Mouse
            pygame.mouse.set_visible(False)
